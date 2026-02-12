@@ -1,64 +1,64 @@
-export const exampleSchema = {
+import type { Group } from '../../types/form-schema.type';
+
+export const exampleSchema: Group = {
     type: 'group',
     id: 'root',
-    label: 'Sample Dynamic Form',
+    label: 'Test Form',
     children: [
         {
-            id: 'firstName',
-            type: 'text',
-            label: 'First Name',
-        },
-        {
-            id: 'lastName',
-            type: 'text',
-            label: 'Last Name',
-        },
-        {
-            id: 'bio',
-            type: 'textarea',
-            label: 'Short Bio',
-        },
-        {
-            id: 'gender',
-            type: 'radio',
-            label: 'Gender',
+            id: 'userType',
+            type: 'dropdown',
+            label: 'User Type',
             options: [
-                { label: 'Male', value: 'male' },
-                { label: 'Female', value: 'female' },
-                { label: 'Other', value: 'other' },
+                { label: 'Admin', value: 'admin' },
+                { label: 'Editor', value: 'editor' },
+                { label: 'Viewer', value: 'viewer' },
             ],
         },
         {
-            id: 'subscribe',
-            type: 'checkbox',
-            label: 'Subscribe to Newsletter',
+            id: 'age',
+            type: 'text',
+            label: 'Age',
         },
         {
-            type: 'group',
-            id: 'addressGroup',
-            label: 'Address Details',
-            children: [
-                {
-                    id: 'street',
-                    type: 'text',
-                    label: 'Street',
-                },
-                {
-                    id: 'city',
-                    type: 'text',
-                    label: 'City',
-                },
-                {
-                    id: 'country',
-                    type: 'dropdown',
-                    label: 'Country',
-                    options: [
-                        { label: 'United States', value: 'us' },
-                        { label: 'Canada', value: 'ca' },
-                        { label: 'United Kingdom', value: 'uk' },
-                    ],
-                },
-            ],
+            id: 'adminCode',
+            type: 'text',
+            label: 'Admin Code',
+            visibilityCondition: {
+                fieldId: 'userType',
+                operator: 'equals',
+                value: 'admin',
+            },
+        },
+        {
+            id: 'editorCode',
+            type: 'text',
+            label: 'Editor Code',
+            visibilityCondition: {
+                fieldId: 'userType',
+                operator: 'notEquals',
+                value: 'admin',
+            },
+        },
+        {
+            id: 'ageAbove18',
+            type: 'text',
+            label: 'Age Above 18',
+            visibilityCondition: {
+                fieldId: 'age',
+                operator: 'greaterThan',
+                value: 18,
+            },
+        },
+        {
+            id: 'ageBelow60',
+            type: 'text',
+            label: 'Age Below 60',
+            visibilityCondition: {
+                fieldId: 'age',
+                operator: 'lessThan',
+                value: 60,
+            },
         },
     ],
 };
