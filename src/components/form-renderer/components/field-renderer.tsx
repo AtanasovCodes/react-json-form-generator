@@ -47,27 +47,30 @@ const FieldRenderer = ({ field, value, onChange }: FieldRendererProps) => {
     case 'radio':
         return (
             <FormControl component="fieldset" margin="normal">
-                <InputLabel>{field.label}</InputLabel>
-                <RadioGroup value={value || ''} onChange={(e) => onChange(field.id, e.target.value)}>
+                <InputLabel id={`radio-label-${field.id}`}>{field.label}</InputLabel>
+                <RadioGroup
+                    aria-labelledby={`radio-label-${field.id}`}
+                    value={value || ''}
+                    onChange={(e) => onChange(field.id, e.target.value)}
+                >
                     {field.options.map((opt) => (
                         <FormControlLabel key={opt.value} value={opt.value} control={<Radio />} label={opt.label} />
                     ))}
                 </RadioGroup>
             </FormControl>
         );
-
     case 'dropdown':
         return (
             <FormControl fullWidth margin="normal">
-                <InputLabel>{field.label}</InputLabel>
+                <InputLabel id={`select-label-${field.id}`}>{field.label}</InputLabel>
                 <Select
+                    labelId={`select-label-${field.id}`}
                     value={value || ''}
                     onChange={(e) => onChange(field.id, e.target.value)}
-                    label={field.label}
                 >
-                    {field.options.map((opt) => (
-                        <MenuItem key={opt.value} value={opt.value}>
-                            {opt.label}
+                    {field.options?.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
                         </MenuItem>
                     ))}
                 </Select>
