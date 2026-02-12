@@ -4,6 +4,7 @@ import type { FormRendererProps } from './form-renderer.props';
 import type { Field, Group } from '../../types/form-schema.type';
 
 import FieldRenderer from './components/field-renderer';
+import { evaluateVisibility } from './utils';
 
 const FormRenderer = ({ schema, formValues, onChange }: FormRendererProps) => {
     return (
@@ -13,6 +14,11 @@ const FormRenderer = ({ schema, formValues, onChange }: FormRendererProps) => {
             </Typography>
             <Box>
                 {schema.children?.map((child: Field | Group) => {
+                    const isChildVisible = evaluateVisibility(child.visibilityCondition, formValues);
+                    if (!isChildVisible) {
+                        return null;
+                    }
+
                     if (child.type === 'group') {
                         return (
                             <FormRenderer key={child.id} schema={child} formValues={formValues} onChange={onChange} />
