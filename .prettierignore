@@ -1,2 +1,6 @@
 dist
 node_modules
+coverage
+src/**/*.test.{ts,tsx}
+src/test/setup.js
+.vscode/*
