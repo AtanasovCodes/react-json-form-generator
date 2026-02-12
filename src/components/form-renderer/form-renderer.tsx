@@ -1,4 +1,4 @@
-import { Paper, Box } from '@mui/material';
+import { Paper, Box, Typography } from '@mui/material';
 
 import type { FormRendererProps } from './form-renderer.props';
 import type { Field, Group } from '../../types/form-schema.type';
@@ -8,6 +8,9 @@ import FieldRenderer from './components/field-renderer';
 const FormRenderer = ({ schema, formValues, onChange }: FormRendererProps) => {
     return (
         <Paper variant="outlined" sx={{ padding: 2, marginY: 2 }}>
+            <Typography variant="h5" gutterBottom>
+                {schema.label}
+            </Typography>
             <Box>
                 {schema.children.map((child: Field | Group) => {
                     if (child.type === 'group') {
