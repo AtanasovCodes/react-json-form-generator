@@ -1,4 +1,5 @@
 import { Box, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import React from 'react';
 
 import type { ViewSwitcherProps } from './view-switcher.props';
 
@@ -51,4 +52,4 @@ const ViewSwitcher = ({ view, onChange }: ViewSwitcherProps) => {
     );
 };
 
-export default ViewSwitcher;
+export default React.memo(ViewSwitcher);

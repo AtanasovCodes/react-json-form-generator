@@ -4,9 +4,11 @@ import type { FormRendererProps } from './form-renderer.props';
 import type { Field, Group } from '../../types/form-schema.type';
 
 import FieldRenderer from './components/field-renderer';
+import { useAutoFill } from './hooks';
 import { evaluateVisibility } from './utils';
 
 const FormRenderer = ({ schema, formValues, onChange }: FormRendererProps) => {
+    useAutoFill({ schema, formValues, onChange });
     return (
         <Paper variant="outlined" sx={{ padding: 2, marginY: 2 }}>
             <Typography variant="h5" gutterBottom data-testid={`form-title-${schema.id}`}>
