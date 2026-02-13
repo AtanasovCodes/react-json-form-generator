@@ -8,20 +8,36 @@ import {
     MenuItem,
     FormControl,
     InputLabel,
+    FormHelperText,
 } from '@mui/material';
+import React, { useState } from 'react';
 
 import type { FieldRendererProps } from './field-renderer.props';
 
-const FieldRenderer = ({ field, value, onChange }: FieldRendererProps) => {
+import { validateField } from './utils/validation';
+
+const FieldRenderer = ({ field, value, onChange, formValues }: FieldRendererProps) => {
+    const [error, setError] = useState<string | null>(null);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        const validationError = validateField(newValue, field.validationRules, formValues);
+
+        setError(validationError);
+        onChange(field.id, newValue);
+    };
+
     switch (field.type) {
         case 'text':
             return (
                 <TextField
                     label={field.label}
                     value={value || ''}
-                    onChange={(e) => onChange(field.id, e.target.value)}
+                    onChange={handleChange}
                     fullWidth
                     margin="normal"
+                    helperText={error}
+                    error={!!error}
                 />
             );
         case 'textarea':
@@ -29,17 +45,19 @@ const FieldRenderer = ({ field, value, onChange }: FieldRendererProps) => {
                 <TextField
                     label={field.label}
                     value={value || ''}
-                    onChange={(e) => onChange(field.id, e.target.value)}
+                    onChange={handleChange}
                     multiline={field.type === 'textarea'}
                     fullWidth
                     margin="normal"
+                    helperText={error}
+                    error={!!error}
                 />
             );
 
         case 'checkbox':
             return (
                 <FormControlLabel
-                    control={<Checkbox checked={!!value} onChange={(e) => onChange(field.id, e.target.checked)} />}
+                    control={<Checkbox checked={!!value} onChange={handleChange} />}
                     label={field.label}
                 />
             );
@@ -48,11 +66,7 @@ const FieldRenderer = ({ field, value, onChange }: FieldRendererProps) => {
             return (
                 <FormControl component="fieldset" margin="normal">
                     <InputLabel id={`radio-label-${field.id}`}>{field.label}</InputLabel>
-                    <RadioGroup
-                        aria-labelledby={`radio-label-${field.id}`}
-                        value={value || ''}
-                        onChange={(e) => onChange(field.id, e.target.value)}
-                    >
+                    <RadioGroup aria-labelledby={`radio-label-${field.id}`} value={value || ''} onChange={handleChange}>
                         {field.options.map((opt) => (
                             <FormControlLabel key={opt.value} value={opt.value} control={<Radio />} label={opt.label} />
                         ))}
@@ -66,7 +80,7 @@ const FieldRenderer = ({ field, value, onChange }: FieldRendererProps) => {
                     <Select
                         labelId={`select-label-${field.id}`}
                         value={value || ''}
-                        onChange={(e) => onChange(field.id, e.target.value)}
+                        onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
                     >
                         {field.options?.map((option) => (
                             <MenuItem key={option.value} value={option.value}>
@@ -74,6 +88,7 @@ const FieldRenderer = ({ field, value, onChange }: FieldRendererProps) => {
                             </MenuItem>
                         ))}
                     </Select>
+                    {error && <FormHelperText error>{error}</FormHelperText>}
                 </FormControl>
             );
 

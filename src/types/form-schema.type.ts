@@ -1,4 +1,4 @@
-import type { VisibilityCondition } from '../components/form-renderer/types';
+import type { ValidationRule, VisibilityCondition } from '../components/form-renderer/types';
 
 export type FieldType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'radio';
 
@@ -7,16 +7,19 @@ export interface BaseField {
     label: string;
     type: FieldType;
     visibilityCondition?: VisibilityCondition;
+    validationRules?: ValidationRule[];
 }
 
 export interface TextField extends BaseField {
     type: 'text' | 'textarea';
     visibilityCondition?: VisibilityCondition;
+    validationRules?: ValidationRule[];
 }
 
 export interface CheckboxField extends BaseField {
     type: 'checkbox';
     visibilityCondition?: VisibilityCondition;
+    validationRules?: ValidationRule[];
 }
 
 export interface ConditionalField extends BaseField {
@@ -41,5 +44,6 @@ export interface Group {
     type: 'group';
     label?: string;
     visibilityCondition?: VisibilityCondition;
+    validationRules?: ValidationRule[];
     children: Array<Field | Group>;
 }
