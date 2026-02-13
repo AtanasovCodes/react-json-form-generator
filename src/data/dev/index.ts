@@ -3,66 +3,32 @@ import type { Group } from '../../types/form-schema.type';
 export const exampleSchema: Group = {
     type: 'group',
     id: 'root',
-    label: 'Dynamic Validation Form',
+    label: 'User Information Form',
     children: [
         {
-            id: 'identificationType',
-            type: 'dropdown',
-            label: 'Identification Type',
-            options: [
-                { label: 'Personal ID', value: 'personalId' },
-                { label: 'Passport', value: 'passport' },
-            ],
-            validationRules: [
-                {
-                    type: 'required',
-                    message: 'Identification Type is required.',
-                },
-            ],
-        },
-        {
-            id: 'identificationNumber',
+            id: 'name',
             type: 'text',
-            label: 'Identification Number',
+            label: 'Name',
             validationRules: [
                 {
                     type: 'required',
-                    message: 'This field is required.',
-                },
-                {
-                    type: 'pattern',
-                    value: /^[0-9]+$/,
-                    message: 'Must be a numeric value.',
-                    dependsOn: {
-                        fieldId: 'identificationType',
-                        value: 'personalId',
-                    },
-                },
-                {
-                    type: 'pattern',
-                    value: /^[A-Za-z0-9]+$/,
-                    message: 'Must be an alphanumeric value.',
-                    dependsOn: {
-                        fieldId: 'identificationType',
-                        value: 'passport',
-                    },
+                    message: 'Name is required.',
                 },
             ],
         },
         {
-            id: 'description',
-            type: 'textarea',
-            label: 'Description',
+            id: 'email',
+            type: 'text',
+            label: 'Email',
             validationRules: [
                 {
-                    type: 'maxLength',
-                    value: 100,
-                    message: 'Description must be less than 100 characters.',
+                    type: 'required',
+                    message: 'Email is required.',
                 },
                 {
-                    type: 'minLength',
-                    value: 10,
-                    message: 'Description must be at least 10 characters.',
+                    type: 'pattern',
+                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                    message: 'Email must be a valid email address.',
                 },
             ],
         },
@@ -71,9 +37,8 @@ export const exampleSchema: Group = {
             type: 'dropdown',
             label: 'User Type',
             options: [
-                { label: 'Admin', value: 'admin' },
-                { label: 'Editor', value: 'editor' },
-                { label: 'Viewer', value: 'viewer' },
+                { label: 'Individual', value: 'individual' },
+                { label: 'Business', value: 'business' },
             ],
             validationRules: [
                 {
@@ -83,28 +48,82 @@ export const exampleSchema: Group = {
             ],
         },
         {
-            id: 'acceptTerms',
-            type: 'checkbox',
-            label: 'Accept Terms and Conditions',
-            validationRules: [
+            type: 'group',
+            id: 'businessDetails',
+            label: 'Business Details',
+            visibilityCondition: {
+                fieldId: 'userType',
+                operator: 'equals',
+                value: 'business',
+            },
+            children: [
                 {
-                    type: 'required',
-                    message: 'You must accept the terms and conditions.',
+                    id: 'businessName',
+                    type: 'text',
+                    label: 'Business Name',
+                    validationRules: [
+                        {
+                            type: 'required',
+                            message: 'Business Name is required for businesses.',
+                        },
+                    ],
+                },
+                {
+                    id: 'businessTaxId',
+                    type: 'text',
+                    label: 'Tax ID',
+                    validationRules: [
+                        {
+                            type: 'required',
+                            message: 'Tax ID is required for businesses.',
+                        },
+                        {
+                            type: 'pattern',
+                            value: /^[0-9]{9}$/,
+                            message: 'Tax ID must be a 9-digit number.',
+                        },
+                    ],
                 },
             ],
         },
         {
-            id: 'gender',
-            type: 'radio',
-            label: 'Gender',
-            options: [
-                { label: 'Male', value: 'male' },
-                { label: 'Female', value: 'female' },
-            ],
-            validationRules: [
+            type: 'group',
+            id: 'addressGroup',
+            label: 'Address',
+            children: [
                 {
-                    type: 'required',
-                    message: 'Gender is required.',
+                    id: 'street',
+                    type: 'text',
+                    label: 'Street',
+                    validationRules: [
+                        {
+                            type: 'required',
+                            message: 'Street is required.',
+                        },
+                    ],
+                },
+                {
+                    id: 'city',
+                    type: 'text',
+                    label: 'City',
+                    validationRules: [
+                        {
+                            type: 'required',
+                            message: 'City is required.',
+                        },
+                    ],
+                },
+                {
+                    id: 'zipCode',
+                    type: 'text',
+                    label: 'Zip Code',
+                    validationRules: [
+                        {
+                            type: 'pattern',
+                            value: /^[0-9]{5}$/,
+                            message: 'Zip Code must be a 5-digit number.',
+                        },
+                    ],
                 },
             ],
         },

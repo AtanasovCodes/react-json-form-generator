@@ -4,20 +4,23 @@ import { useState } from 'react';
 import type { Group } from './types/form-schema.type';
 
 import { FormRenderer } from './components/form-renderer';
+import { generateJSON } from './components/form-renderer/utils';
+import { JSONModal } from './components/json-modal';
 import { SchemaEditor } from './components/schema-editor';
 import { exampleSchema } from './data/dev';
 
 function App() {
     const [formValues, setFormValues] = useState<Record<string, unknown>>({});
     const [schema, setSchema] = useState<Group>(exampleSchema as Group);
+    const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
 
     const handleChange = (id: string, value: unknown) => {
         setFormValues((prev) => ({ ...prev, [id]: value }));
     };
 
     const handleSubmit = () => {
-        console.log('Submitted JSON:', formValues);
-        alert(JSON.stringify(formValues, null, 2));
+        const output = generateJSON(schema, formValues);
+        setSubmittedJson(output);
     };
 
     return (
@@ -43,6 +46,9 @@ function App() {
                     </Box>
                 </Grid>
             </Grid>
+            {submittedJson && (
+                <JSONModal open={!!submittedJson} onClose={() => setSubmittedJson(null)} jsonData={submittedJson} />
+            )}
         </Container>
     );
 }
