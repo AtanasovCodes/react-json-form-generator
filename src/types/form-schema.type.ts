@@ -1,6 +1,11 @@
 import type { ValidationRule, VisibilityCondition } from '../components/form-renderer/types';
 
 export type FieldType = 'text' | 'textarea' | 'dropdown' | 'checkbox' | 'radio';
+export interface AutoFillConfig {
+    api: string;
+    inputFields: string[];
+    targetFields: string[];
+}
 
 export interface BaseField {
     id: string;
@@ -8,18 +13,15 @@ export interface BaseField {
     type: FieldType;
     visibilityCondition?: VisibilityCondition;
     validationRules?: ValidationRule[];
+    autoFill?: AutoFillConfig;
 }
 
 export interface TextField extends BaseField {
     type: 'text' | 'textarea';
-    visibilityCondition?: VisibilityCondition;
-    validationRules?: ValidationRule[];
 }
 
 export interface CheckboxField extends BaseField {
     type: 'checkbox';
-    visibilityCondition?: VisibilityCondition;
-    validationRules?: ValidationRule[];
 }
 
 export interface ConditionalField extends BaseField {
@@ -34,7 +36,6 @@ export interface Option {
 export interface SelectField extends BaseField {
     type: 'dropdown' | 'radio';
     options: Option[];
-    visibilityCondition?: VisibilityCondition;
 }
 
 export type Field = TextField | CheckboxField | SelectField;
@@ -44,6 +45,7 @@ export interface Group {
     type: 'group';
     label?: string;
     visibilityCondition?: VisibilityCondition;
+    autoFill?: AutoFillConfig;
     validationRules?: ValidationRule[];
     children: Array<Field | Group>;
 }

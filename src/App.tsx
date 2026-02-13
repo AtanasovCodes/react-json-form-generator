@@ -1,5 +1,5 @@
 import { Box, Button, Container, Grid } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import type { Group } from './types/form-schema.type';
 
@@ -13,19 +13,19 @@ function App() {
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
 
-    const handleChange = (id: string, value: unknown) => {
+    const handleChange = useCallback((id: string, value: unknown) => {
         setFormValues((prev) => ({ ...prev, [id]: value }));
-    };
+    }, []);
+
+    const handleViewChange = useCallback((event: React.MouseEvent<HTMLElement>, newView: 'grid' | 'row') => {
+        if (newView) {
+            setView(newView);
+        }
+    }, []);
 
     const handleSubmit = () => {
         const output = generateJSON(schema, formValues);
         setSubmittedJson(output);
-    };
-
-    const handleViewChange = (event: React.MouseEvent<HTMLElement>, newView: 'grid' | 'row') => {
-        if (newView) {
-            setView(newView);
-        }
     };
 
     return (
