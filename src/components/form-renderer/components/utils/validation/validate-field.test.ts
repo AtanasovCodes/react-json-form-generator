@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 
 import { validateField } from './index';
 
-describe.only('validateField', () => {
+describe('validateField', () => {
     it('returns an error message for a required field with an empty value', () => {
         const validationRules = [{ type: 'required', message: 'This field is required.' }];
 

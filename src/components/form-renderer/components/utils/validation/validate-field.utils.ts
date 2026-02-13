@@ -44,8 +44,21 @@ const validateField = (
                 }
                 break;
             case 'pattern':
-                if (typeof value === 'string' && !(rule.value as RegExp).test(value)) {
-                    return rule.message;
+                if (typeof value === 'string') {
+                    let regex: RegExp;
+
+                    // Check if rule.value is already a RegExp, otherwise convert it
+                    if (rule.value instanceof RegExp) {
+                        regex = rule.value;
+                    } else if (typeof rule.value === 'string') {
+                        regex = new RegExp(rule.value);
+                    } else {
+                        throw new Error(`Invalid pattern value for field: ${rule.value}`);
+                    }
+
+                    if (!regex.test(value)) {
+                        return rule.message;
+                    }
                 }
                 break;
             default:
