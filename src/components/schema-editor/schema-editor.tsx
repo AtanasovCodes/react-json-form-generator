@@ -1,6 +1,6 @@
 import Editor, { useMonaco } from '@monaco-editor/react';
 import { Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import type { SchemaEditorProps } from './schema-editor.props';
 
@@ -72,4 +72,4 @@ const SchemaEditor = ({ initialSchema, onSchemaChange }: SchemaEditorProps) => {
     );
 };
 
-export default SchemaEditor;
+export default React.memo(SchemaEditor);
