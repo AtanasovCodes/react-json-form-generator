@@ -1,18 +1,17 @@
 import { Box, Button, Container, Grid } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import type { Group } from './types/form-schema.type';
 
-import { FormRenderer } from './components/form-renderer';
+import { ViewSwitcher, FormRenderer, JSONModal, SchemaEditor } from './components';
 import { generateJSON } from './components/form-renderer/utils';
-import { JSONModal } from './components/json-modal';
-import { SchemaEditor } from './components/schema-editor';
 import { exampleSchema } from './data/dev';
 
 function App() {
     const [formValues, setFormValues] = useState<Record<string, unknown>>({});
     const [schema, setSchema] = useState<Group>(exampleSchema as Group);
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
+    const [view, setView] = useState<'grid' | 'row'>('grid');
 
     const handleChange = (id: string, value: unknown) => {
         setFormValues((prev) => ({ ...prev, [id]: value }));
@@ -23,13 +22,42 @@ function App() {
         setSubmittedJson(output);
     };
 
+    const handleViewChange = (event: React.MouseEvent<HTMLElement>, newView: 'grid' | 'row') => {
+        if (newView) {
+            setView(newView);
+        }
+    };
+
     return (
         <Container maxWidth="xl">
-            <Grid container spacing={4} padding={4} component="aside" aria-label="Schema Editor">
-                <Grid size={6}>
+            <ViewSwitcher view={view} onChange={handleViewChange} />
+            <Grid
+                container
+                direction={view === 'row' ? 'column' : 'row'} // Toggle between row and grid
+                sx={{
+                    flexDirection: { xs: 'column', sm: view === 'grid' ? 'row' : 'column' }, // Force row on mobile
+                }}
+                spacing={4}
+                padding={4}
+            >
+                <Grid
+                    size={{
+                        xs: 12,
+                        sm: view === 'grid' ? 6 : 12,
+                    }}
+                    component="aside"
+                    aria-label="Schema Editor"
+                >
                     <SchemaEditor initialSchema={schema} onSchemaChange={setSchema} />
                 </Grid>
-                <Grid size={6} component="main" aria-label="Dynamic Form">
+                <Grid
+                    size={{
+                        xs: 12,
+                        sm: view === 'grid' ? 6 : 12,
+                    }}
+                    component="main"
+                    aria-label="Dynamic Form"
+                >
                     <Box
                         component="form"
                         onSubmit={(e) => {

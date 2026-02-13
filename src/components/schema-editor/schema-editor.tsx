@@ -22,7 +22,13 @@ const SchemaEditor = ({ initialSchema, onSchemaChange }: SchemaEditorProps) => {
     };
 
     return (
-        <Box mb={4}>
+        <Box
+            mb={4}
+            sx={{
+                height: { xs: '300px', sm: '400px', md: '500px' },
+                overflow: 'auto',
+            }}
+        >
             <Typography variant="h6" gutterBottom>
                 JSON Form Schema
             </Typography>
