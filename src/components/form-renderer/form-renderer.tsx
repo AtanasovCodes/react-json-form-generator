@@ -26,7 +26,13 @@ const FormRenderer = ({ schema, formValues, onChange }: FormRendererProps) => {
                     }
 
                     return (
-                        <FieldRenderer key={child.id} field={child} value={formValues[child.id]} onChange={onChange} />
+                        <FieldRenderer
+                            key={child.id}
+                            field={child}
+                            value={formValues[child.id]}
+                            onChange={onChange}
+                            formValues={formValues}
+                        />
                     );
                 })}
             </Box>
