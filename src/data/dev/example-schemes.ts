@@ -210,6 +210,8 @@ const schemes = {
     nestedGroupSchema,
     dynamicFormSchema,
     dynamicValidationFormSchema,
-};
+} as const;
+
+export type ExampleSchemeKey = keyof typeof schemes;
 
 export default schemes;

@@ -1,9 +1,9 @@
-import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box, Button, Container, Grid } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
 import type { Group } from './types/form-schema.type';
 
-import { ViewSwitcher, FormRenderer, JSONModal, SchemaEditor } from './components';
+import { ViewSwitcher, FormRenderer, JSONModal, SchemaEditor, SchemaSelector } from './components';
 import { generateJSON } from './components/form-renderer/utils';
 import { exampleSchemes } from './data/dev';
 
@@ -14,7 +14,7 @@ function App() {
     const [view, setView] = useState<'grid' | 'row'>('grid');
     const [selectedSchemaId, setSelectedSchemaId] = useState<string>('dynamicValidationFormSchema');
 
-    const handleChange = useCallback((id: string, value: unknown) => {
+    const handleFormChange = useCallback((id: string, value: unknown) => {
         setFormValues((prev) => ({ ...prev, [id]: value }));
     }, []);
 
@@ -29,26 +29,17 @@ function App() {
         setSubmittedJson(output);
     };
 
-    const handleSchemaChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const selectedKey = event.target.value as keyof typeof exampleSchemes;
-        const selectedSchema = exampleSchemes[selectedKey];
-        setSelectedSchemaId(selectedKey);
-        setSchema(selectedSchema);
-        setFormValues({});
-        setSubmittedJson(null);
-    };
-
     return (
         <Container maxWidth="xl">
             <ViewSwitcher view={view} onChange={handleViewChange} />
             <Grid
                 container
-                direction={view === 'row' ? 'column' : 'row'} // Toggle between row and grid
+                direction={view === 'row' ? 'column' : 'row'}
                 sx={{
                     flexDirection: { xs: 'column', sm: view === 'grid' ? 'row' : 'column' }, // Force row on mobile
                 }}
                 spacing={4}
-                padding={4}
+                padding={{ xs: 0, sm: 4 }}
             >
                 <Grid
                     size={{
@@ -58,21 +49,13 @@ function App() {
                     component="aside"
                     aria-label="Schema Editor"
                 >
-                    <FormControl fullWidth sx={{ mb: 2 }}>
-                        <InputLabel id="schema-select-label">Select Example Schema</InputLabel>
-                        <Select
-                            labelId="schema-select-label"
-                            value={selectedSchemaId}
-                            onChange={handleSchemaChange}
-                            label="Select Example Schema"
-                        >
-                            {Object.entries(exampleSchemes).map(([key, example]) => (
-                                <MenuItem key={key} value={key}>
-                                    {example.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <SchemaSelector
+                        selectedSchemaId={selectedSchemaId}
+                        setSelectedSchemaId={setSelectedSchemaId}
+                        setSchema={setSchema}
+                        setFormValues={setFormValues}
+                        setSubmittedJson={setSubmittedJson}
+                    />
                     <SchemaEditor initialSchema={schema} onSchemaChange={setSchema} />
                 </Grid>
                 <Grid
@@ -90,7 +73,7 @@ function App() {
                             handleSubmit();
                         }}
                     >
-                        <FormRenderer schema={schema} formValues={formValues} onChange={handleChange} />
+                        <FormRenderer schema={schema} formValues={formValues} onChange={handleFormChange} />
                         <Box sx={{ mt: 2 }} component="footer">
                             <Button type="submit" variant="contained" color="primary">
                                 Submit
