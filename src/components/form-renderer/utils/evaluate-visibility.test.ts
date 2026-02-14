@@ -64,6 +64,7 @@ describe('evaluateVisibility', () => {
 
     it('should return true if fieldId does not exist in formValues', () => {
         const condition = { fieldId: 'nonExistentField', operator: 'equals', value: 'value' };
+        //@ts-expect-error - we want to test behavior when fieldId is missing
         expect(evaluateVisibility(condition, formValues)).toBe(false);
     });
 });

@@ -49,6 +49,7 @@ const useAutoFill = ({ schema, formValues, onChange }: UseAutoFillProps) => {
             if (!allInputsPresent) return;
 
             const payload = inputFields.reduce((acc, id) => {
+                //@ts-expect-error - We are assuming that formValues will have the necessary keys based on the inputFields array
                 acc[id] = formValues[id];
                 return acc;
             }, {});
