@@ -1,17 +1,18 @@
-import { Box, Button, Container, Grid } from '@mui/material';
+import { Box, Button, Container, FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
 import type { Group } from './types/form-schema.type';
 
 import { ViewSwitcher, FormRenderer, JSONModal, SchemaEditor } from './components';
 import { generateJSON } from './components/form-renderer/utils';
-import { exampleSchema } from './data/dev';
+import { exampleSchemes } from './data/dev';
 
 function App() {
     const [formValues, setFormValues] = useState<Record<string, unknown>>({});
-    const [schema, setSchema] = useState<Group>(exampleSchema as Group);
+    const [schema, setSchema] = useState<Group>(exampleSchemes.dynamicValidationFormSchema);
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
+    const [selectedSchemaId, setSelectedSchemaId] = useState<string>('dynamicValidationFormSchema');
 
     const handleChange = useCallback((id: string, value: unknown) => {
         setFormValues((prev) => ({ ...prev, [id]: value }));
@@ -26,6 +27,15 @@ function App() {
     const handleSubmit = () => {
         const output = generateJSON(schema, formValues);
         setSubmittedJson(output);
+    };
+
+    const handleSchemaChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        const selectedKey = event.target.value as keyof typeof exampleSchemes;
+        const selectedSchema = exampleSchemes[selectedKey];
+        setSelectedSchemaId(selectedKey);
+        setSchema(selectedSchema);
+        setFormValues({});
+        setSubmittedJson(null);
     };
 
     return (
@@ -48,6 +58,21 @@ function App() {
                     component="aside"
                     aria-label="Schema Editor"
                 >
+                    <FormControl fullWidth sx={{ mb: 2 }}>
+                        <InputLabel id="schema-select-label">Select Example Schema</InputLabel>
+                        <Select
+                            labelId="schema-select-label"
+                            value={selectedSchemaId}
+                            onChange={handleSchemaChange}
+                            label="Select Example Schema"
+                        >
+                            {Object.entries(exampleSchemes).map(([key, example]) => (
+                                <MenuItem key={key} value={key}>
+                                    {example.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <SchemaEditor initialSchema={schema} onSchemaChange={setSchema} />
                 </Grid>
                 <Grid
