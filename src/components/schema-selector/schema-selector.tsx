@@ -13,13 +13,15 @@ const SchemaSelector = ({
     setSubmittedJson,
 }: SchemaSelectorProps) => {
     const handleSchemaChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const selectedKey = event.target.value as keyof typeof exampleSchemes;
-        const selectedSchema = exampleSchemes[selectedKey];
-        setSelectedSchemaId(selectedKey);
-        setSchema(selectedSchema);
+        const schemaId = event.target.value as string;
+
+        setSelectedSchemaId(schemaId);
+        setSchema(schemaId ? exampleSchemes[schemaId] : exampleSchemes.blankSchema);
+
         setFormValues({});
         setSubmittedJson(null);
     };
+
     return (
         <FormControl fullWidth sx={{ mb: 2 }}>
             <InputLabel id="schema-select-label">Select Example Schema</InputLabel>

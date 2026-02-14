@@ -258,12 +258,20 @@ const autoFillSchema: Group = {
     ],
 };
 
+const blankSchema: Group = {
+    id: 'root',
+    type: 'group',
+    label: 'New Form',
+    children: [],
+};
+
 const schemes = {
     simpleFormSchema,
     nestedGroupSchema,
     dynamicFormSchema,
     autoFillSchema,
     dynamicValidationFormSchema,
+    blankSchema,
 } as const;
 
 export type ExampleSchemeKey = keyof typeof schemes;
