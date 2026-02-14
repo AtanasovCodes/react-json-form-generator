@@ -1,1 +1,1 @@
-export { default as SchemaEditor } from './schema-editor';
+export { default as SchemaEditorContainer } from './schema-editor-container';
