@@ -1,12 +1,16 @@
 import Editor, { useMonaco } from '@monaco-editor/react';
 import { Box, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import type { SchemaEditorProps } from './schema-editor.props';
 
 const SchemaEditor = ({ initialSchema, onSchemaChange }: SchemaEditorProps) => {
     const [text, setText] = useState(JSON.stringify(initialSchema, null, 2));
     const monaco = useMonaco();
+
+    useEffect(() => {
+        setText(JSON.stringify(initialSchema, null, 2));
+    }, [initialSchema]);
 
     const handleEditorChange = (value: string | undefined) => {
         if (!value) return;
