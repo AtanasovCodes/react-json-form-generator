@@ -1,6 +1,7 @@
 import { Box, Button, Container, Grid } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
+import type { ExampleSchemeKey } from './data/dev/example-schemes';
 import type { Group } from './types/form-schema.type';
 
 import { ViewSwitcher, FormRenderer, JSONModal, SchemaSelector, SchemaEditorContainer } from './components';
@@ -9,10 +10,10 @@ import { exampleSchemes } from './data/dev';
 
 function App() {
     const [formValues, setFormValues] = useState<Record<string, unknown>>({});
-    const [schema, setSchema] = useState<Group>(exampleSchemes.simpleFormSchema);
+    const [schema, setSchema] = useState<Group>(exampleSchemes.blankSchema);
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
-    const [selectedSchemaId, setSelectedSchemaId] = useState<string>('dynamicValidationFormSchema');
+    const [selectedSchemaId, setSelectedSchemaId] = useState<ExampleSchemeKey>('blankSchema');
 
     const handleFormChange = useCallback((id: string, value: unknown) => {
         setFormValues((prev) => ({ ...prev, [id]: value }));
