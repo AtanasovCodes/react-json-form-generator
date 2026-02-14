@@ -11,6 +11,7 @@ export const mockApi = {
     },
 
     fetchAddress: async ({ postalCode }: { postalCode: string }) => {
+        console.log(`Fetching address for postal code: ${postalCode}`);
         return new Promise((resolve) =>
             setTimeout(() => {
                 resolve({

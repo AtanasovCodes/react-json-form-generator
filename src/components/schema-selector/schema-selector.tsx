@@ -29,6 +29,7 @@ const SchemaSelector = ({
             <Select
                 labelId="schema-select-label"
                 value={selectedSchemaId}
+                //@ts-expect-error - MUI types are a bit off here
                 onChange={handleSchemaChange}
                 label="Select Example Schema"
             >
