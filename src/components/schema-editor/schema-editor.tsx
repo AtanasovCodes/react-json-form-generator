@@ -1,49 +1,19 @@
-import Editor, { useMonaco } from '@monaco-editor/react';
-import { Box, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import Editor from '@monaco-editor/react';
+import { Box, Typography, Alert } from '@mui/material';
+import debounce from 'lodash.debounce';
 
 import type { SchemaEditorProps } from './schema-editor.props';
 
-const SchemaEditor = ({ initialSchema, onSchemaChange }: SchemaEditorProps) => {
-    const [text, setText] = useState(JSON.stringify(initialSchema, null, 2));
-    const monaco = useMonaco();
-
-    useEffect(() => {
-        setText(JSON.stringify(initialSchema, null, 2));
-    }, [initialSchema]);
-
-    const handleEditorChange = (value: string | undefined) => {
+const SchemaEditor = ({ schema, handleSchemaChange, error }: SchemaEditorProps) => {
+    const handleEditorChange = debounce((value?: string) => {
         if (!value) return;
-
-        setText(value);
-
         try {
             const parsed = JSON.parse(value);
-            onSchemaChange(parsed);
-
-            if (monaco) {
-                const model = monaco.editor.getModels()[0];
-                monaco.editor.setModelMarkers(model, 'json', []);
-            }
-        } catch (err: unknown) {
-            if (err instanceof SyntaxError) {
-                console.error('JSON parsing error:', err.message);
-            }
-            if (monaco) {
-                const model = monaco.editor.getModels()[0];
-                monaco.editor.setModelMarkers(model, 'json', [
-                    {
-                        startLineNumber: 1,
-                        startColumn: 1,
-                        endLineNumber: 1,
-                        endColumn: 1,
-                        message: 'Invalid JSON format',
-                        severity: monaco.MarkerSeverity.Error,
-                    },
-                ]);
-            }
+            handleSchemaChange(parsed);
+        } catch {
+            console.error('Invalid JSON:', value);
         }
-    };
+    }, 300);
 
     return (
         <Box
@@ -59,10 +29,11 @@ const SchemaEditor = ({ initialSchema, onSchemaChange }: SchemaEditorProps) => {
             <Typography variant="h6" gutterBottom>
                 JSON Form Schema
             </Typography>
+            {error && <Alert severity="error">{error}</Alert>}
             <Editor
                 height="100%"
                 defaultLanguage="json"
-                value={text}
+                value={JSON.stringify(schema, null, 2)}
                 onChange={handleEditorChange}
                 options={{
                     minimap: { enabled: false },
@@ -76,4 +47,4 @@ const SchemaEditor = ({ initialSchema, onSchemaChange }: SchemaEditorProps) => {
     );
 };
 
-export default React.memo(SchemaEditor);
+export default SchemaEditor;

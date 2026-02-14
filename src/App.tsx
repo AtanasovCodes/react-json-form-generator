@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 
 import type { Group } from './types/form-schema.type';
 
-import { ViewSwitcher, FormRenderer, JSONModal, SchemaEditor, SchemaSelector } from './components';
+import { ViewSwitcher, FormRenderer, JSONModal, SchemaSelector, SchemaEditorContainer } from './components';
 import { generateJSON } from './components/form-renderer/utils';
 import { exampleSchemes } from './data/dev';
 
@@ -56,7 +56,7 @@ function App() {
                         setFormValues={setFormValues}
                         setSubmittedJson={setSubmittedJson}
                     />
-                    <SchemaEditor initialSchema={schema} onSchemaChange={setSchema} />
+                    <SchemaEditorContainer schema={schema} setSchema={setSchema} />
                 </Grid>
                 <Grid
                     size={{
