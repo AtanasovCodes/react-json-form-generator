@@ -4,6 +4,7 @@ Example JSON Schema for Dynamic Form Builder
 {
     "id": "root",
     "type": "group",
+    "version": "1.0.0",
     "label": "User Form",
     "children": [
         {
@@ -31,6 +32,7 @@ Nested Group Example:
 {
     "id": "root",
     "type": "group",
+    "version": "1.0.0",
     "label": "Survey Form",
     "children": [
         {
@@ -99,6 +101,7 @@ Dynamic Visibility Example:
 {
     "id": "root",
     "type": "group",
+    "version": "1.0.0",
     "label": "Dynamic Form",
     "children": [
         {
@@ -136,6 +139,7 @@ Validation Example:
 {
     "type": "group",
     "id": "root",
+    "version": "1.0.0",
     "label": "Dynamic Validation Form",
     "children": [
         {
@@ -223,66 +227,56 @@ Auto-Fill Example:
 
 ```json
 {
-  "id": "root",
-  "type": "group",
-  "label": "Auto-Fill Form",
-  "children": [
-    {
-      "id": "firstName",
-      "label": "First Name",
-      "type": "text"
-    },
-    {
-      "id": "lastName",
-      "label": "Last Name",
-      "type": "text"
-    },
-    {
-      "id": "fullName",
-      "label": "Full Name",
-      "type": "text",
-      "autoFill": {
-        "api": "fetchUserData",
-        "inputFields": [
-          "firstName",
-          "lastName"
-        ],
-        "targetFields": [
-          "fullName",
-          "email"
-        ]
-      }
-    },
-    {
-      "id": "email",
-      "label": "Email",
-      "type": "text"
-    },
-    {
-      "id": "postalCode",
-      "label": "Postal Code",
-      "type": "text"
-    },
-    {
-      "id": "city",
-      "label": "City",
-      "type": "text",
-      "autoFill": {
-        "api": "fetchAddress",
-        "inputFields": [
-          "postalCode"
-        ],
-        "targetFields": [
-          "city",
-          "country"
-        ]
-      }
-    },
-    {
-      "id": "country",
-      "label": "Country",
-      "type": "text"
-    }
-  ]
+    "id": "root",
+    "type": "group",
+    "version": "1.0.0",
+    "label": "Auto-Fill Form",
+    "children": [
+        {
+            "id": "firstName",
+            "label": "First Name",
+            "type": "text"
+        },
+        {
+            "id": "lastName",
+            "label": "Last Name",
+            "type": "text"
+        },
+        {
+            "id": "fullName",
+            "label": "Full Name",
+            "type": "text",
+            "autoFill": {
+                "api": "fetchUserData",
+                "inputFields": ["firstName", "lastName"],
+                "targetFields": ["fullName", "email"]
+            }
+        },
+        {
+            "id": "email",
+            "label": "Email",
+            "type": "text"
+        },
+        {
+            "id": "postalCode",
+            "label": "Postal Code",
+            "type": "text"
+        },
+        {
+            "id": "city",
+            "label": "City",
+            "type": "text",
+            "autoFill": {
+                "api": "fetchAddress",
+                "inputFields": ["postalCode"],
+                "targetFields": ["city", "country"]
+            }
+        },
+        {
+            "id": "country",
+            "label": "Country",
+            "type": "text"
+        }
+    ]
 }
 ```

@@ -6,6 +6,9 @@ export const groupSchemaValidation = Yup.object({
         .oneOf(['group'], 'The root "type" must always be "group".')
         .required('The "type" field is required.'),
     label: Yup.string().optional(),
+    version: Yup.string()
+        .required('The "version" field is required for the root component.') // Enforce version for root
+        .matches(/^\d+\.\d+\.\d+$/, 'The "version" field must follow semantic versioning (e.g., 1.0.0).'),
     children: Yup.array()
         .of(
             Yup.object({

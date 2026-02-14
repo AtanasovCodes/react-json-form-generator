@@ -4,6 +4,7 @@ const simpleFormSchema: Group = {
     id: 'root',
     type: 'group',
     label: 'Simple Form',
+    version: '1.0.0',
     children: [
         {
             id: 'firstName',
@@ -26,6 +27,7 @@ const simpleFormSchema: Group = {
 const nestedGroupSchema: Group = {
     id: 'root',
     type: 'group',
+    version: '1.0.0',
     label: 'Nested Form',
     children: [
         {
@@ -90,6 +92,7 @@ const nestedGroupSchema: Group = {
 const dynamicFormSchema: Group = {
     id: 'root',
     type: 'group',
+    version: '1.0.0',
     label: 'Dynamic Visibility Form',
     children: [
         {
@@ -122,6 +125,7 @@ const dynamicFormSchema: Group = {
 
 const dynamicValidationFormSchema: Group = {
     type: 'group',
+    version: '1.0.0',
     id: 'root',
     label: 'Dynamic Validation Form',
     children: [
@@ -208,6 +212,7 @@ const dynamicValidationFormSchema: Group = {
 const autoFillSchema: Group = {
     id: 'root',
     type: 'group',
+    version: '1.0.0',
     label: 'Auto-Fill Form',
     children: [
         {
@@ -260,6 +265,7 @@ const autoFillSchema: Group = {
 
 const blankSchema: Group = {
     id: 'root',
+    version: '1.0.0',
     type: 'group',
     label: 'New Form',
     children: [],

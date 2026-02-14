@@ -42,6 +42,7 @@ export type Field = TextField | CheckboxField | SelectField;
 
 export interface Group {
     id: string;
+    version?: string;
     type: 'group';
     label?: string;
     visibilityCondition?: VisibilityCondition;
