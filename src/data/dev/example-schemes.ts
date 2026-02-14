@@ -1,9 +1,9 @@
 import type { Group } from '../../types/form-schema.type';
 
-const userFormSchema: Group = {
+const simpleFormSchema: Group = {
     id: 'root',
     type: 'group',
-    label: 'User Form',
+    label: 'Simple Form',
     children: [
         {
             id: 'firstName',
@@ -26,7 +26,7 @@ const userFormSchema: Group = {
 const nestedGroupSchema: Group = {
     id: 'root',
     type: 'group',
-    label: 'Survey Form',
+    label: 'Nested Form',
     children: [
         {
             id: 'personalInfo',
@@ -90,7 +90,7 @@ const nestedGroupSchema: Group = {
 const dynamicFormSchema: Group = {
     id: 'root',
     type: 'group',
-    label: 'Dynamic Form',
+    label: 'Dynamic Visibility Form',
     children: [
         {
             id: 'hasPet',
@@ -259,7 +259,7 @@ const autoFillSchema: Group = {
 };
 
 const schemes = {
-    userFormSchema,
+    simpleFormSchema,
     nestedGroupSchema,
     dynamicFormSchema,
     autoFillSchema,
