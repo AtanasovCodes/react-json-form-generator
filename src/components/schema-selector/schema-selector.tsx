@@ -2,6 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
 
 import type { SchemaSelectorProps } from './schema-selector.props';
+import type { ExampleSchemeKey } from '../../data/dev/example-schemes';
 
 import { exampleSchemes } from '../../data/dev';
 
@@ -13,7 +14,7 @@ const SchemaSelector = ({
     setSubmittedJson,
 }: SchemaSelectorProps) => {
     const handleSchemaChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        const schemaId = event.target.value as string;
+        const schemaId = event.target.value as ExampleSchemeKey;
 
         setSelectedSchemaId(schemaId);
         setSchema(schemaId ? exampleSchemes[schemaId] : exampleSchemes.blankSchema);
