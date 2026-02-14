@@ -19,6 +19,7 @@ const JsonModal = ({ open, onClose, jsonData }: JsonModalProps) => {
     return (
         <Modal open={open} onClose={onClose}>
             <Box
+                role="dialog"
                 sx={{
                     position: 'absolute',
                     top: '50%',
@@ -37,6 +38,7 @@ const JsonModal = ({ open, onClose, jsonData }: JsonModalProps) => {
                     Submitted JSON
                 </Typography>
                 <pre
+                    aria-label="JSON Data"
                     style={{
                         backgroundColor: '#f4f4f4',
                         padding: '10px',

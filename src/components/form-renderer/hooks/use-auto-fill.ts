@@ -67,7 +67,7 @@ const useAutoFill = ({ schema, formValues, onChange }: UseAutoFillProps) => {
                 return;
             }
 
-            if (node.type === 'group') {
+            if (node.type === 'group' && Array.isArray(node.children)) {
                 node.children.forEach(traverse);
             } else {
                 processField(node as Field);

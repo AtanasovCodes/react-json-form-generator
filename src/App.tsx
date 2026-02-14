@@ -9,7 +9,7 @@ import { exampleSchemes } from './data/dev';
 
 function App() {
     const [formValues, setFormValues] = useState<Record<string, unknown>>({});
-    const [schema, setSchema] = useState<Group>(exampleSchemes.dynamicValidationFormSchema);
+    const [schema, setSchema] = useState<Group>(exampleSchemes.userFormSchema);
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
     const [selectedSchemaId, setSelectedSchemaId] = useState<string>('dynamicValidationFormSchema');
