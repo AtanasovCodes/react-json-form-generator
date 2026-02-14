@@ -1,6 +1,5 @@
-import { FormRenderer } from './form-renderer';
-import { JSONModal } from './json-modal';
-import { SchemaEditor } from './schema-editor';
-import { ViewSwitcher } from './view-switcher';
-
-export { ViewSwitcher, FormRenderer, SchemaEditor, JSONModal };
+export { FormRenderer } from './form-renderer';
+export { JSONModal } from './json-modal';
+export { SchemaEditor } from './schema-editor';
+export { SchemaSelector } from './schema-selector';
+export { ViewSwitcher } from './view-switcher';
