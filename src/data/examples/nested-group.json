@@ -1,0 +1,64 @@
+{
+    "id": "root",
+    "type": "group",
+    "version": "1.0.0",
+    "label": "Survey Form",
+    "children": [
+        {
+            "id": "personalInfo",
+            "type": "group",
+            "label": "Personal Information",
+            "children": [
+                {
+                    "id": "name",
+                    "label": "Name",
+                    "type": "text"
+                },
+                {
+                    "id": "email",
+                    "label": "Email",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "id": "feedback",
+            "type": "group",
+            "label": "Feedback",
+            "children": [
+                {
+                    "id": "satisfaction",
+                    "label": "Satisfaction Level",
+                    "type": "dropdown",
+                    "options": [
+                        {
+                            "label": "Very Satisfied",
+                            "value": "very_satisfied"
+                        },
+                        {
+                            "label": "Satisfied",
+                            "value": "satisfied"
+                        },
+                        {
+                            "label": "Neutral",
+                            "value": "neutral"
+                        },
+                        {
+                            "label": "Dissatisfied",
+                            "value": "dissatisfied"
+                        },
+                        {
+                            "label": "Very Dissatisfied",
+                            "value": "very_dissatisfied"
+                        }
+                    ]
+                },
+                {
+                    "id": "comments",
+                    "label": "Additional Comments",
+                    "type": "text"
+                }
+            ]
+        }
+    ]
+}

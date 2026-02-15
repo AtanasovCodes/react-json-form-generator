@@ -1,282 +1,81 @@
-Example JSON Schema for Dynamic Form Builder
+# Dynamic Form Builder
 
-```json
-{
-    "id": "root",
-    "type": "group",
-    "version": "1.0.0",
-    "label": "User Form",
-    "children": [
-        {
-            "id": "firstName",
-            "label": "First Name",
-            "type": "text"
-        },
-        {
-            "id": "lastName",
-            "label": "Last Name",
-            "type": "text"
-        },
-        {
-            "id": "email",
-            "label": "Email",
-            "type": "text"
-        }
-    ]
-}
+A dynamic form builder application built with React, TypeScript,
+and Material-UI. This project allows users to create, edit, and render dynamic forms with validation and auto-save functionality.
+
+---
+
+## **Features**
+
+- Create and edit dynamic forms with a schema-based approach.
+- Auto-save functionality for form schemas and values.
+- Validation rules for form fields.
+- Built with React, TypeScript, Monaco Editor, and Material-UI.
+- Unit tests using Vitest.
+
+---
+
+## **Project Structure**
+
+The project is organized into a feature-based folder structure:
+
+```bash
+src/
+├── App.tsx                 # Main application entry point
+├── components/             # Reusable UI components
+│   ├── form-renderer/      # Dynamic form renderer + utilities
+│   ├── schema-editor/      # Schema editing UI - Monaco Editor integration
+│   ├── schema-selector/    # Schema selection dropdown
+│   ├── json-modal/         # Modal for displaying JSON output
+│   └── view-switcher/      # Grid/row layout switcher
+├── constants/              # Application-wide constants
+├── data/                   # Example schemas, mock API data
+├── services/               # Auto-save and shared service logic
+├── test/                   # Test setup and utilities
+├── types/                  # TypeScript type definitions
+└── main.tsx                # React entry point
 ```
 
-Nested Group Example:
+---
 
-```json
-{
-    "id": "root",
-    "type": "group",
-    "version": "1.0.0",
-    "label": "Survey Form",
-    "children": [
-        {
-            "id": "personalInfo",
-            "type": "group",
-            "label": "Personal Information",
-            "children": [
-                {
-                    "id": "name",
-                    "label": "Name",
-                    "type": "text"
-                },
-                {
-                    "id": "email",
-                    "label": "Email",
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "id": "feedback",
-            "type": "group",
-            "label": "Feedback",
-            "children": [
-                {
-                    "id": "satisfaction",
-                    "label": "Satisfaction Level",
-                    "type": "dropdown",
-                    "options": [
-                        {
-                            "label": "Very Satisfied",
-                            "value": "very_satisfied"
-                        },
-                        {
-                            "label": "Satisfied",
-                            "value": "satisfied"
-                        },
-                        {
-                            "label": "Neutral",
-                            "value": "neutral"
-                        },
-                        {
-                            "label": "Dissatisfied",
-                            "value": "dissatisfied"
-                        },
-                        {
-                            "label": "Very Dissatisfied",
-                            "value": "very_dissatisfied"
-                        }
-                    ]
-                },
-                {
-                    "id": "comments",
-                    "label": "Additional Comments",
-                    "type": "text"
-                }
-            ]
-        }
-    ]
-}
-```
+## **Getting Started**
 
-Dynamic Visibility Example:
+### **Prerequisites**
 
-```json
-{
-    "id": "root",
-    "type": "group",
-    "version": "1.0.0",
-    "label": "Dynamic Form",
-    "children": [
-        {
-            "id": "hasPet",
-            "label": "Do you have a pet?",
-            "type": "dropdown",
-            "options": [
-                {
-                    "label": "Yes",
-                    "value": "yes"
-                },
-                {
-                    "label": "No",
-                    "value": "no"
-                }
-            ]
-        },
-        {
-            "id": "petType",
-            "label": "Type of Pet",
-            "type": "text",
-            "visibilityCondition": {
-                "fieldId": "hasPet",
-                "operator": "equals",
-                "value": "yes"
-            }
-        }
-    ]
-}
-```
+- [Node.js](https://nodejs.org/) (v16 or later)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-Validation Example:
+### **Installation**
 
-```json
-{
-    "type": "group",
-    "id": "root",
-    "version": "1.0.0",
-    "label": "Dynamic Validation Form",
-    "children": [
-        {
-            "id": "identificationType",
-            "type": "dropdown",
-            "label": "Identification Type",
-            "options": [
-                { "label": "Personal ID", "value": "personalId" },
-                { "label": "Passport", "value": "passport" }
-            ],
-            "validationRules": [
-                {
-                    "type": "required",
-                    "message": "Identification Type is required."
-                }
-            ]
-        },
-        {
-            "id": "identificationNumber",
-            "type": "text",
-            "label": "Identification Number",
-            "validationRules": [
-                {
-                    "type": "required",
-                    "message": "This field is required."
-                },
-                {
-                    "type": "pattern",
-                    "value": "^[0-9]+$",
-                    "message": "Must be a numeric value.",
-                    "dependsOn": {
-                        "fieldId": "identificationType",
-                        "value": "personalId"
-                    }
-                },
-                {
-                    "type": "pattern",
-                    "value": "^[A-Za-z0-9]+$",
-                    "message": "Must be an alphanumeric value.",
-                    "dependsOn": {
-                        "fieldId": "identificationType",
-                        "value": "passport"
-                    }
-                }
-            ]
-        },
-        {
-            "id": "description",
-            "type": "textarea",
-            "label": "Description",
-            "validationRules": [
-                {
-                    "type": "maxLength",
-                    "value": 100,
-                    "message": "Description must be less than 100 characters."
-                },
-                {
-                    "type": "minLength",
-                    "value": 10,
-                    "message": "Description must be at least 10 characters."
-                }
-            ]
-        },
-        {
-            "id": "userType",
-            "type": "dropdown",
-            "label": "User Type",
-            "options": [
-                { "label": "Admin", "value": "admin" },
-                { "label": "Editor", "value": "editor" },
-                { "label": "Viewer", "value": "viewer" }
-            ],
-            "validationRules": [
-                {
-                    "type": "required",
-                    "message": "User Type is required."
-                }
-            ]
-        }
-    ]
-}
-```
+1. Clone the repository:
 
-Auto-Fill Example:
+    ```bash
+    git clone https://github.com/AtanasovCodes/react-json-form-generator
+    cd react-json-form-generator
+    ```
 
-```json
-{
-    "id": "root",
-    "type": "group",
-    "version": "1.0.0",
-    "label": "Auto-Fill Form",
-    "children": [
-        {
-            "id": "firstName",
-            "label": "First Name",
-            "type": "text"
-        },
-        {
-            "id": "lastName",
-            "label": "Last Name",
-            "type": "text"
-        },
-        {
-            "id": "fullName",
-            "label": "Full Name",
-            "type": "text",
-            "autoFill": {
-                "api": "fetchUserData",
-                "inputFields": ["firstName", "lastName"],
-                "targetFields": ["fullName", "email"]
-            }
-        },
-        {
-            "id": "email",
-            "label": "Email",
-            "type": "text"
-        },
-        {
-            "id": "postalCode",
-            "label": "Postal Code",
-            "type": "text"
-        },
-        {
-            "id": "city",
-            "label": "City",
-            "type": "text",
-            "autoFill": {
-                "api": "fetchAddress",
-                "inputFields": ["postalCode"],
-                "targetFields": ["city", "country"]
-            }
-        },
-        {
-            "id": "country",
-            "label": "Country",
-            "type": "text"
-        }
-    ]
-}
-```
+2. Install dependencies:
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3. Start the development server:
+
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+
+4. Open your browser and navigate to `http://localhost:3000` to see the application in action.
+
+### Example JSON Schema for Dynamic Form Builder
+
+- [Basic Form Example](src/data/examples/basic-form.json)
+- [Nested Group Example](src/data/examples/nested-group.json)
+- [Dynamic Visibility Example](src/data/examples/dynamic-visibility.json)
+- [Validation Example](src/data/examples/validation.json)
+- [Auto-Fill Example](src/data/examples/auto-fill.json)
