@@ -1,9 +1,11 @@
 import debounce from 'lodash.debounce';
 import { useEffect, useMemo, useState } from 'react';
 
-import type { Group } from '../../../types/form-schema.type';
 
-import { validateField } from '../components/utils/validation';
+
+import type { Group } from '@app-types/form-schema.type';
+
+import { validateField } from '../utils/validation';
 
 const schemaHasValidation = (group: Group): boolean => {
     if (!group.children) return false;

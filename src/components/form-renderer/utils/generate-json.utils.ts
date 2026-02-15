@@ -1,4 +1,4 @@
-import type { Field, Group } from '../../../types/form-schema.type';
+import type { Group, Field } from '@app-types/form-schema.type';
 
 import evaluateVisibility from './evaluate-visibility.utils';
 

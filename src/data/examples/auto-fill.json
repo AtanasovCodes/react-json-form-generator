@@ -20,14 +20,8 @@
             "type": "text",
             "autoFill": {
                 "api": "fetchUserData",
-                "inputFields": [
-                    "firstName",
-                    "lastName"
-                ],
-                "targetFields": [
-                    "fullName",
-                    "email"
-                ]
+                "inputFields": ["firstName", "lastName"],
+                "targetFields": ["fullName", "email"]
             }
         },
         {
@@ -46,13 +40,8 @@
             "type": "text",
             "autoFill": {
                 "api": "fetchAddress",
-                "inputFields": [
-                    "postalCode"
-                ],
-                "targetFields": [
-                    "city",
-                    "country"
-                ]
+                "inputFields": ["postalCode"],
+                "targetFields": ["city", "country"]
             }
         },
         {

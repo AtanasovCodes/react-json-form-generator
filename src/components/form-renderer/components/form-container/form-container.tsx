@@ -3,7 +3,8 @@ import React from 'react';
 
 import type { FormContainerProps } from './form-container.props';
 
-import FormRenderer from '../../form-renderer';
+import { FormRenderer } from '@components/form-renderer';
+
 
 const FormContainer = ({ schema, formValues, onFormChange, onSubmit, isValid }: FormContainerProps) => {
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
