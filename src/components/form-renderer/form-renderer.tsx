@@ -3,7 +3,7 @@ import { Paper, Box, Typography } from '@mui/material';
 import type { FormRendererProps } from './form-renderer.props';
 import type { Field, Group } from '../../types/form-schema.type';
 
-import FieldRenderer from './components/field-renderer';
+import { FieldRenderer } from './components';
 import { useAutoFill } from './hooks';
 import { evaluateVisibility } from './utils';
 

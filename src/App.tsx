@@ -1,10 +1,12 @@
-import { Box, Button, Container, Grid } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import type { ExampleSchemeKey } from './data/dev/example-schemes';
 import type { Group } from './types/form-schema.type';
 
-import { ViewSwitcher, FormRenderer, JSONModal, SchemaSelector, SchemaEditorContainer } from './components';
+import { ViewSwitcher, JSONModal, SchemaSelector, SchemaEditorContainer } from './components';
+import { FormContainer } from './components/form-renderer/components';
+import { useFormValidation } from './components/form-renderer/hooks';
 import { generateJSON } from './components/form-renderer/utils';
 import { AUTO_SAVE_KEY } from './constants';
 import { exampleSchemes } from './data/dev';
@@ -32,6 +34,7 @@ function App() {
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
     const [selectedSchemaId, setSelectedSchemaId] = useState<ExampleSchemeKey>('blankSchema');
+    const { isValid } = useFormValidation(schema, formValues);
 
     const handleFormChange = useCallback((id: string, value: unknown) => {
         setFormValues((prev) => ({ ...prev, [id]: value }));
@@ -100,20 +103,13 @@ function App() {
                     component="main"
                     aria-label="Dynamic Form"
                 >
-                    <Box
-                        component="form"
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            handleSubmit();
-                        }}
-                    >
-                        <FormRenderer schema={schema} formValues={formValues} onChange={handleFormChange} />
-                        <Box sx={{ mt: 2 }} component="footer">
-                            <Button type="submit" variant="contained" color="primary">
-                                Submit
-                            </Button>
-                        </Box>
-                    </Box>
+                    <FormContainer
+                        schema={schema}
+                        formValues={formValues}
+                        onFormChange={handleFormChange}
+                        onSubmit={handleSubmit}
+                        isValid={isValid}
+                    />
                 </Grid>
             </Grid>
             {submittedJson && (

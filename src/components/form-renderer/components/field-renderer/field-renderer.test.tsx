@@ -3,14 +3,15 @@ import '@testing-library/jest-dom';
 import { vi, describe, it, expect, afterEach } from 'vitest';
 
 import type { FieldRendererProps } from './field-renderer.props';
-import type { Field } from '../../../types/form-schema.type';
+
+import { Field } from '../../../../types/form-schema.type';
 
 import FieldRenderer from './field-renderer';
 
 const mockOnChange = vi.fn();
 
 const renderField = (field: FieldRendererProps['field'], value: unknown = '') => {
-    render(<FieldRenderer field={field} value={value} onChange={mockOnChange} />);
+    render(<FieldRenderer field={field} value={value} onChange={mockOnChange} formValues={{}} />);
 };
 
 describe('FieldRenderer', () => {
