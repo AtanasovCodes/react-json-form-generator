@@ -22,4 +22,3 @@ export type VisibilityCondition = {
      */
     value: unknown;
 };
-

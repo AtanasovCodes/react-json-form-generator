@@ -63,17 +63,32 @@ export default [
                     ],
                     pathGroups: [
                         {
-                            pattern: '**/*.d.ts',
-                            group: 'type',
-                            position: 'after',
-                        },
-                        {
-                            pattern: 'src/components/**',
+                            pattern: '@components/**',
                             group: 'internal',
                             position: 'after',
                         },
+                        {
+                            pattern: '@data/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
+                        {
+                            pattern: '@hooks/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
+                        {
+                            pattern: '@utils/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
+                        {
+                            pattern: '@app-types/**',
+                            group: 'type',
+                            position: 'after',
+                        },
                     ],
-                    pathGroupsExcludedImportTypes: ['builtin', 'external'],
+                    pathGroupsExcludedImportTypes: [],
                     alphabetize: {
                         order: 'asc',
                         caseInsensitive: true,

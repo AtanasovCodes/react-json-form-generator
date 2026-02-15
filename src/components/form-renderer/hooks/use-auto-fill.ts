@@ -1,9 +1,10 @@
 import debounce from 'lodash.debounce';
 import { useEffect, useRef } from 'react';
 
-import type { Field, Group } from '../../../types/form-schema.type';
+import type { Group, Field } from '@app-types/form-schema.type';
 
-import { mockApi } from '../../../data/dev/mock-api';
+import { mockApi } from '@data/dev/mock-api';
+
 import { evaluateVisibility } from '../utils';
 
 interface UseAutoFillProps {

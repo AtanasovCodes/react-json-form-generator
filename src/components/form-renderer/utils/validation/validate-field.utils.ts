@@ -1,4 +1,4 @@
-import type { ValidationRule } from '../../../types';
+import type { ValidationRule } from '../../types';
 
 /**
  * Validate a field based on its validation rules and current form values.
