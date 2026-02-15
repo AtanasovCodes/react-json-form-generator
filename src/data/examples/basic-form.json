@@ -1,0 +1,23 @@
+{
+    "id": "root",
+    "type": "group",
+    "version": "1.0.0",
+    "label": "User Form",
+    "children": [
+        {
+            "id": "firstName",
+            "label": "First Name",
+            "type": "text"
+        },
+        {
+            "id": "lastName",
+            "label": "Last Name",
+            "type": "text"
+        },
+        {
+            "id": "email",
+            "label": "Email",
+            "type": "text"
+        }
+    ]
+}

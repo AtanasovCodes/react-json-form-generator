@@ -1,0 +1,33 @@
+{
+    "id": "root",
+    "type": "group",
+    "version": "1.0.0",
+    "label": "Dynamic Form",
+    "children": [
+        {
+            "id": "hasPet",
+            "label": "Do you have a pet?",
+            "type": "dropdown",
+            "options": [
+                {
+                    "label": "Yes",
+                    "value": "yes"
+                },
+                {
+                    "label": "No",
+                    "value": "no"
+                }
+            ]
+        },
+        {
+            "id": "petType",
+            "label": "Type of Pet",
+            "type": "text",
+            "visibilityCondition": {
+                "fieldId": "hasPet",
+                "operator": "equals",
+                "value": "yes"
+            }
+        }
+    ]
+}
