@@ -1,4 +1,4 @@
-import type { Field } from '../../../types/form-schema.type';
+import type { Field } from '../../../../types/form-schema.type';
 
 export interface FieldRendererProps {
     field: Field;

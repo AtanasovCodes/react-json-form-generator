@@ -15,7 +15,6 @@ const validateField = (
     for (const rule of validationRules) {
         if (rule.dependsOn) {
             const dependentValue = formValues[rule.dependsOn.fieldId];
-            console.log({ dependentValue, expectedValue: rule.dependsOn.value });
             if (dependentValue !== rule.dependsOn.value) {
                 continue;
             }
