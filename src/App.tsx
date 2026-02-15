@@ -3,13 +3,11 @@ import React, { useCallback, useState } from 'react';
 
 import { ViewSwitcher, JSONModal, SchemaSelector, SchemaEditorContainer } from './components';
 import { FormContainer } from './components/form-renderer/components';
-import { useFormValidation } from './components/form-renderer/hooks';
 import { generateJSON } from './components/form-renderer/utils';
 import { useFormBuilder } from './hooks';
 
 function App() {
     const { schema, setSchema, formValues, setFormValues } = useFormBuilder();
-    const { isValid } = useFormValidation(schema, formValues);
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
 
@@ -76,7 +74,6 @@ function App() {
                         formValues={formValues}
                         onFormChange={handleFormChange}
                         onSubmit={handleSubmit}
-                        isValid={isValid}
                     />
                 </Grid>
             </Grid>

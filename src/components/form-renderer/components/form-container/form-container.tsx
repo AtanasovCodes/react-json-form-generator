@@ -4,8 +4,11 @@ import React from 'react';
 import type { FormContainerProps } from './form-container.props';
 
 import { FormRenderer } from '@components/form-renderer';
+import { useFormValidation } from '@components/form-renderer/hooks';
 
-const FormContainer = ({ schema, formValues, onFormChange, onSubmit, isValid }: FormContainerProps) => {
+const FormContainer = ({ schema, formValues, onFormChange, onSubmit }: FormContainerProps) => {
+    const { isValid } = useFormValidation(schema, formValues);
+
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!isValid) {
