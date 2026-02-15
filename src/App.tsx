@@ -32,7 +32,12 @@ function App() {
     };
 
     return (
-        <Container maxWidth="xl">
+        <Container
+            maxWidth="xl"
+            sx={{
+                py: 4,
+            }}
+        >
             <ViewSwitcher view={view} onChange={handleViewChange} />
             <Grid
                 container
@@ -40,7 +45,7 @@ function App() {
                 sx={{
                     flexDirection: { xs: 'column', sm: view === 'grid' ? 'row' : 'column' }, // Force row on mobile
                 }}
-                spacing={4}
+                spacing={{ xs: 2, sm: 4 }}
                 padding={{ xs: 0, sm: 4 }}
             >
                 <Grid

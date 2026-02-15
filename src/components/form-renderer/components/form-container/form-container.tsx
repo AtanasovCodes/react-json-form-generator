@@ -5,7 +5,6 @@ import type { FormContainerProps } from './form-container.props';
 
 import { FormRenderer } from '@components/form-renderer';
 
-
 const FormContainer = ({ schema, formValues, onFormChange, onSubmit, isValid }: FormContainerProps) => {
     const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -19,7 +18,13 @@ const FormContainer = ({ schema, formValues, onFormChange, onSubmit, isValid }: 
         <Box component="form" onSubmit={handleSubmit}>
             <FormRenderer schema={schema} formValues={formValues} onChange={onFormChange} />
             <Box sx={{ mt: 2 }} component="footer">
-                <Button type="submit" variant="contained" color="primary" disabled={!isValid}>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    disabled={!isValid}
+                    sx={{ width: { xs: '100%', sm: 'auto' } }}
+                >
                     Submit
                 </Button>
             </Box>

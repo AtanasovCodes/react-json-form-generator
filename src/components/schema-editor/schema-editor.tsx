@@ -17,13 +17,13 @@ const SchemaEditor = ({ schema, handleSchemaChange, error }: SchemaEditorProps) 
 
     return (
         <Box
-            mb={4}
             sx={{
                 height: { xs: '300px', sm: '400px', md: '600px' },
                 overflow: 'hidden',
                 border: '1px solid #ccc',
                 borderRadius: '8px',
                 p: 2,
+                mb: { xs: 2, sm: 4 },
             }}
         >
             <Typography variant="h6" gutterBottom>
