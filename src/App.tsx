@@ -1,44 +1,28 @@
 import { Container, Grid } from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import type { ExampleSchemeKey } from './data/dev/example-schemes';
-import type { Group } from './types/form-schema.type';
 
 import { ViewSwitcher, JSONModal, SchemaSelector, SchemaEditorContainer } from './components';
 import { FormContainer } from './components/form-renderer/components';
 import { useFormValidation } from './components/form-renderer/hooks';
 import { generateJSON } from './components/form-renderer/utils';
-import { AUTO_SAVE_KEY } from './constants';
-import { exampleSchemes } from './data/dev';
-import { AutoSaveService } from './services';
-
-const autoSaveSchema = new AutoSaveService<Group>({
-    version: '1.0.0',
-    validate: (data): data is Group => !!data && typeof data === 'object',
-});
-
-const autoSaveValues = new AutoSaveService<Record<string, unknown>>({
-    version: '1.0.0',
-    validate: (data): data is Record<string, unknown> => !!data && typeof data === 'object',
-});
+import { useFormValuesState, useSchemaState } from './hooks';
 
 function App() {
-    const [formValues, setFormValues] = useState<Record<string, unknown>>(() => {
-        const savedValues = autoSaveValues.load(`values:${AUTO_SAVE_KEY}`);
-        return savedValues ? savedValues : {};
-    });
-    const [schema, setSchema] = useState<Group>(() => {
-        const savedSchema = autoSaveSchema.load(AUTO_SAVE_KEY);
-        return savedSchema ? savedSchema : exampleSchemes.blankSchema;
-    });
+    const { schema, setSchema } = useSchemaState();
+    const { formValues, setFormValues } = useFormValuesState();
+    const { isValid } = useFormValidation(schema, formValues);
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
     const [selectedSchemaId, setSelectedSchemaId] = useState<ExampleSchemeKey>('blankSchema');
-    const { isValid } = useFormValidation(schema, formValues);
 
-    const handleFormChange = useCallback((id: string, value: unknown) => {
-        setFormValues((prev) => ({ ...prev, [id]: value }));
-    }, []);
+    const handleFormChange = useCallback(
+        (id: string, value: unknown) => {
+            setFormValues((prev) => ({ ...prev, [id]: value }));
+        },
+        [setFormValues]
+    );
 
     const handleViewChange = useCallback((_event: React.MouseEvent<HTMLElement>, newView: 'grid' | 'row') => {
         if (newView) {
@@ -50,21 +34,6 @@ function App() {
         const output = generateJSON(schema, formValues);
         setSubmittedJson(output);
     };
-
-    useEffect(() => {
-        autoSaveSchema.save(AUTO_SAVE_KEY, schema);
-    }, [schema]);
-
-    useEffect(() => {
-        autoSaveValues.save(`values:${AUTO_SAVE_KEY}`, formValues);
-    }, [formValues]);
-
-    useEffect(() => {
-        return () => {
-            autoSaveValues.cancel();
-            autoSaveSchema.cancel();
-        };
-    }, []);
 
     return (
         <Container maxWidth="xl">
