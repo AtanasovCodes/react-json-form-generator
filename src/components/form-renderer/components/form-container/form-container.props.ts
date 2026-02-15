@@ -5,5 +5,4 @@ export interface FormContainerProps {
     formValues: Record<string, unknown>;
     onFormChange: (id: string, value: unknown) => void;
     onSubmit: () => void;
-    isValid: boolean;
 }
