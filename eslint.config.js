@@ -73,6 +73,11 @@ export default [
                             position: 'after',
                         },
                         {
+                            pattern: '@constants/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
+                        {
                             pattern: '@hooks/**',
                             group: 'internal',
                             position: 'after',
