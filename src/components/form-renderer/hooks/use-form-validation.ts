@@ -1,9 +1,9 @@
 import debounce from 'lodash.debounce';
 import { useEffect, useMemo, useState } from 'react';
 
-
-
 import type { Group } from '@app-types/form-schema.type';
+
+import { AppConfig } from '@constants/app-config';
 
 import { validateField } from '../utils/validation';
 
@@ -47,7 +47,7 @@ const useFormValidation = (schema: Group, formValues: Record<string, unknown>) =
             debounce((schema: Group, values: Record<string, unknown>) => {
                 const result = hasValidation ? isGroupValid(schema, values) : true;
                 setIsValid(result);
-            }, 300),
+            }, AppConfig.validationDebounceMs),
         [hasValidation]
     );
 
