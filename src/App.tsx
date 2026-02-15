@@ -1,21 +1,17 @@
 import { Container, Grid } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
-import type { ExampleSchemeKey } from './data/dev/example-schemes';
-
 import { ViewSwitcher, JSONModal, SchemaSelector, SchemaEditorContainer } from './components';
 import { FormContainer } from './components/form-renderer/components';
 import { useFormValidation } from './components/form-renderer/hooks';
 import { generateJSON } from './components/form-renderer/utils';
-import { useFormValuesState, useSchemaState } from './hooks';
+import { useFormBuilder } from './hooks';
 
 function App() {
-    const { schema, setSchema } = useSchemaState();
-    const { formValues, setFormValues } = useFormValuesState();
+    const { schema, setSchema, formValues, setFormValues } = useFormBuilder();
     const { isValid } = useFormValidation(schema, formValues);
     const [submittedJson, setSubmittedJson] = useState<Record<string, unknown> | null>(null);
     const [view, setView] = useState<'grid' | 'row'>('grid');
-    const [selectedSchemaId, setSelectedSchemaId] = useState<ExampleSchemeKey>('blankSchema');
 
     const handleFormChange = useCallback(
         (id: string, value: unknown) => {
@@ -56,8 +52,6 @@ function App() {
                     aria-label="Schema Editor"
                 >
                     <SchemaSelector
-                        selectedSchemaId={selectedSchemaId}
-                        setSelectedSchemaId={setSelectedSchemaId}
                         setSchema={setSchema}
                         setFormValues={setFormValues}
                         setSubmittedJson={setSubmittedJson}

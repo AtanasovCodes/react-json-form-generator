@@ -68,6 +68,11 @@ export default [
                             position: 'after',
                         },
                         {
+                            pattern: '@services/**',
+                            group: 'internal',
+                            position: 'after',
+                        },
+                        {
                             pattern: '@data/**',
                             group: 'internal',
                             position: 'after',

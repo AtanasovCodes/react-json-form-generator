@@ -1,18 +1,14 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 import type { SchemaSelectorProps } from './schema-selector.props';
 import type { ExampleSchemeKey } from '../../data/dev/example-schemes';
 
-import { exampleSchemes } from '../../data/dev';
+import exampleSchemes from '../../data/dev/example-schemes';
 
-const SchemaSelector = ({
-    selectedSchemaId,
-    setSelectedSchemaId,
-    setSchema,
-    setFormValues,
-    setSubmittedJson,
-}: SchemaSelectorProps) => {
+const SchemaSelector = ({ setSchema, setFormValues, setSubmittedJson }: SchemaSelectorProps) => {
+    const [selectedSchemaId, setSelectedSchemaId] = useState<ExampleSchemeKey>('blankSchema');
+
     const handleSchemaChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         const schemaId = event.target.value as ExampleSchemeKey;
 
