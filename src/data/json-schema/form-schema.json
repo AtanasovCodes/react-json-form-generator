@@ -1,0 +1,255 @@
+{
+    "$id": "formSchema",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": [
+        "id",
+        "type",
+        "version",
+        "children"
+    ],
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "group"
+            ],
+            "errorMessage": "The root \"type\" must always be \"group\"."
+        },
+        "label": {
+            "type": "string"
+        },
+        "version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$",
+            "errorMessage": "The \"version\" field must follow semantic versioning (e.g., 1.0.0)."
+        },
+        "visibilityCondition": {
+            "type": "object",
+            "required": [
+                "fieldId",
+                "operator",
+                "value"
+            ],
+            "properties": {
+                "field": {
+                    "type": "string"
+                },
+                "fieldId": {
+                    "type": "string"
+                },
+                "operator": {
+                    "type": "string",
+                    "enum": [
+                        "equals",
+                        "notEquals",
+                        "greaterThan",
+                        "lessThan"
+                    ]
+                },
+                "value": {}
+            },
+            "additionalProperties": false
+        },
+        "validationRules": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "type",
+                    "message"
+                ],
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "required",
+                            "pattern",
+                            "minLength",
+                            "maxLength"
+                        ]
+                    },
+                    "value": {},
+                    "message": {
+                        "type": "string"
+                    },
+                    "dependsOn": {
+                        "type": "object",
+                        "required": [
+                            "fieldId",
+                            "value"
+                        ],
+                        "properties": {
+                            "fieldId": {
+                                "type": "string"
+                            },
+                            "value": {}
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "allOf": [
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "required"
+                                }
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "message"
+                            ],
+                            "not": {
+                                "anyOf": [
+                                    {
+                                        "required": [
+                                            "value"
+                                        ]
+                                    },
+                                    {
+                                        "required": [
+                                            "dependsOn"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "pattern"
+                                }
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "value",
+                                "message",
+                                "dependsOn"
+                            ]
+                        }
+                    },
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "minLength",
+                                        "maxLength"
+                                    ]
+                                }
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "value",
+                                "message"
+                            ],
+                            "not": {
+                                "required": [
+                                    "dependsOn"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "additionalProperties": false
+            }
+        },
+        "children": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "group",
+                            "text",
+                            "number",
+                            "dropdown",
+                            "textarea"
+                        ]
+                    },
+                    "label": {
+                        "type": "string"
+                    },
+                    "visibilityCondition": {
+                        "$ref": "#/properties/visibilityCondition"
+                    },
+                    "validationRules": {
+                        "$ref": "#/properties/validationRules"
+                    },
+                    "children": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/properties/children/items"
+                        }
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "label",
+                                "value"
+                            ],
+                            "properties": {
+                                "label": {
+                                    "type": "string"
+                                },
+                                "value": {}
+                            }
+                        }
+                    }
+                },
+                "allOf": [
+                    {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "group"
+                                }
+                            }
+                        },
+                        "then": {
+                            "required": [
+                                "children"
+                            ],
+                            "properties": {
+                                "children": {
+                                    "type": "array",
+                                    "minItems": 1
+                                }
+                            }
+                        },
+                        "else": {
+                            "not": {
+                                "required": [
+                                    "children"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "additionalProperties": false
+            }
+        }
+    },
+    "additionalProperties": false
+}
