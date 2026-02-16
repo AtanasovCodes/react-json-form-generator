@@ -163,6 +163,32 @@
                 "additionalProperties": false
             }
         },
+        "autoFill": {
+            "type": "object",
+            "required": [
+                "api",
+                "inputFields",
+                "targetFields"
+            ],
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "inputFields": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "targetFields": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
         "children": {
             "type": "array",
             "minItems": 1,
@@ -194,6 +220,9 @@
                     },
                     "validationRules": {
                         "$ref": "#/properties/validationRules"
+                    },
+                    "autoFill": {
+                        "$ref": "#/properties/autoFill"
                     },
                     "children": {
                         "type": "array",
