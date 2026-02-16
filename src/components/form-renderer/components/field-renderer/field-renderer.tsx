@@ -9,6 +9,7 @@ import {
     FormControl,
     InputLabel,
     FormHelperText,
+    CircularProgress,
 } from '@mui/material';
 import React, { useState } from 'react';
 
@@ -16,7 +17,7 @@ import type { FieldRendererProps } from './field-renderer.props';
 
 import { validateField } from '@components/form-renderer/utils/validation';
 
-const FieldRenderer = ({ field, value, onChange, formValues }: FieldRendererProps) => {
+const FieldRenderer = ({ field, value, onChange, formValues, isLoading }: FieldRendererProps) => {
     const [error, setError] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +39,12 @@ const FieldRenderer = ({ field, value, onChange, formValues }: FieldRendererProp
                     margin="normal"
                     helperText={error}
                     error={!!error}
+                    disabled={isLoading}
+                    slotProps={{
+                        input: {
+                            endAdornment: isLoading && <CircularProgress size={18} />,
+                        },
+                    }}
                 />
             );
         case 'textarea':
@@ -50,7 +57,13 @@ const FieldRenderer = ({ field, value, onChange, formValues }: FieldRendererProp
                     fullWidth
                     margin="normal"
                     helperText={error}
+                    disabled={isLoading}
                     error={!!error}
+                    slotProps={{
+                        input: {
+                            endAdornment: isLoading && <CircularProgress size={18} />,
+                        },
+                    }}
                 />
             );
 
