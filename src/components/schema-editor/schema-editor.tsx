@@ -3,10 +3,6 @@ import { Box, Typography, Alert } from '@mui/material';
 
 import type { SchemaEditorProps } from './schema-editor.props';
 
-import { setupMonaco } from './monaco-setup';
-
-setupMonaco();
-
 const SchemaEditor = ({ schema, handleSchemaChange, error }: SchemaEditorProps) => {
     const handleEditorChange = (value?: string) => {
         if (!value) return;
