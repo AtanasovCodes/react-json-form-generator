@@ -135,6 +135,16 @@ Groups can contain their own `children` array, which can include other fields or
 
 ---
 
+### Example JSON Schema for Dynamic Form Builder
+
+- [Basic Form Example](src/data/examples/basic-form.json)
+- [Nested Group Example](src/data/examples/nested-group.json)
+- [Dynamic Visibility Example](src/data/examples/dynamic-visibility.json)
+- [Validation Example](src/data/examples/validation.json)
+- [Auto-Fill Example](src/data/examples/auto-fill.json)
+
+---
+
 ### **Installation**
 
 1. Clone the repository:
@@ -162,10 +172,3 @@ Groups can contain their own `children` array, which can include other fields or
 
 4. Open your browser and navigate to `http://localhost:3000` to see the application in action.
 
-### Example JSON Schema for Dynamic Form Builder
-
-- [Basic Form Example](src/data/examples/basic-form.json)
-- [Nested Group Example](src/data/examples/nested-group.json)
-- [Dynamic Visibility Example](src/data/examples/dynamic-visibility.json)
-- [Validation Example](src/data/examples/validation.json)
-- [Auto-Fill Example](src/data/examples/auto-fill.json)
