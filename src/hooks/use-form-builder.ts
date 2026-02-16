@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import type { Group } from '@app-types/form-schema.type';
+import type { Field, Group } from '@app-types/form-schema.type';
 
 import { exampleSchemes } from '@data/dev';
 
@@ -36,9 +36,36 @@ const useFormBuilder = () => {
         setFormValues({});
     }, []);
 
+    const syncFormValuesWithSchema = useCallback(
+        (schema: Group, formValues: Record<string, unknown>): Record<string, unknown> => {
+            const validKeys = new Set<string>();
+
+            const traverse = (node: Group | Field) => {
+                validKeys.add(node.id);
+
+                if (node.type === 'group' && Array.isArray(node.children)) {
+                    node.children.forEach(traverse);
+                }
+            };
+
+            traverse(schema);
+
+            const syncedValues: Record<string, unknown> = {};
+            Object.keys(formValues).forEach((key) => {
+                if (validKeys.has(key)) {
+                    syncedValues[key] = formValues[key];
+                }
+            });
+
+            return syncedValues;
+        },
+        []
+    );
+
     useEffect(() => {
-        autoSaveValues.save(AppConfig.storageKeys.values, formValues);
-    }, [formValues]);
+        const cleaned = syncFormValuesWithSchema(schema, formValues);
+        autoSaveValues.save(AppConfig.storageKeys.values, cleaned);
+    }, [formValues, schema, syncFormValuesWithSchema]);
 
     useEffect(() => {
         autoSaveSchema.save(AppConfig.storageKeys.schema, schema);
