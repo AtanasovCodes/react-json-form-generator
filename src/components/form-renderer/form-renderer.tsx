@@ -9,7 +9,7 @@ import { useAutoFill } from './hooks';
 import { evaluateVisibility } from './utils';
 
 const FormRenderer = ({ schema, formValues, onChange }: FormRendererProps) => {
-    useAutoFill({ schema, formValues, onChange });
+    const { isLoading } = useAutoFill({ schema, formValues, onChange });
     return (
         <Paper variant="outlined" sx={{ padding: 2, marginY: 2 }}>
             <Typography variant="h5" gutterBottom data-testid={`form-title-${schema.id}`}>
@@ -35,6 +35,7 @@ const FormRenderer = ({ schema, formValues, onChange }: FormRendererProps) => {
                             value={formValues[child.id]}
                             onChange={onChange}
                             formValues={formValues}
+                            isLoading={isLoading(child.id)}
                         />
                     );
                 })}

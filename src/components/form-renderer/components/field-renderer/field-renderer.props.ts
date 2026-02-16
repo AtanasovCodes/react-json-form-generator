@@ -5,4 +5,5 @@ export interface FieldRendererProps {
     value: unknown;
     onChange: (id: string, value: unknown) => void;
     formValues: Record<string, unknown>;
+    isLoading?: boolean;
 }
