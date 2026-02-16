@@ -1,11 +1,14 @@
 import Editor from '@monaco-editor/react';
 import { Box, Typography, Alert } from '@mui/material';
-import debounce from 'lodash.debounce';
 
 import type { SchemaEditorProps } from './schema-editor.props';
 
+import { setupMonaco } from './monaco-setup';
+
+setupMonaco();
+
 const SchemaEditor = ({ schema, handleSchemaChange, error }: SchemaEditorProps) => {
-    const handleEditorChange = debounce((value?: string) => {
+    const handleEditorChange = (value?: string) => {
         if (!value) return;
         try {
             const parsed = JSON.parse(value);
@@ -13,7 +16,7 @@ const SchemaEditor = ({ schema, handleSchemaChange, error }: SchemaEditorProps) 
         } catch {
             console.error('Invalid JSON:', value);
         }
-    }, 300);
+    };
 
     return (
         <Box
