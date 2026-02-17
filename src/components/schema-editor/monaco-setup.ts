@@ -3,7 +3,7 @@ import { loader } from '@monaco-editor/react';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 
-import jsonSchema from '../../data/json-schema/form-schema.json';
+import jsonSchema from '@data/schema-definitions/form-schema.json';
 
 export const setupMonaco = () => {
     self.MonacoEnvironment = {

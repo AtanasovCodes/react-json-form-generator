@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import type { Field, Group } from '@app-types/form-schema.type';
 
-import { exampleSchemes } from '@data/dev';
+import { exampleSchemes } from '@data/examples';
 
 import { AppConfig } from '@constants/app-config';
 
