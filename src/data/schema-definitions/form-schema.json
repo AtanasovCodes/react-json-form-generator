@@ -131,8 +131,7 @@
                         "then": {
                             "required": [
                                 "value",
-                                "message",
-                                "dependsOn"
+                                "message"
                             ]
                         }
                     },
